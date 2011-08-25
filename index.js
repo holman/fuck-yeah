@@ -49,7 +49,8 @@ server.get("/favicon.ico", function(request, response){
 })
 
 server.get(new RegExp("^/(.*)$"), function(request, response, match) {
-  var match = escape(match)
+  var msg   = ""
+    , match = escape(match)
     , chars = match.length
 
   if(chars < 7)
