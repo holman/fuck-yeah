@@ -17,8 +17,8 @@ function fetch(query,cb){
 
 function download(match, output, addText){
   fetch(match, function(file){
-    host = url.parse(file).hostname
-    path = url.parse(file).pathname
+    var host = url.parse(file).hostname
+      , path = url.parse(file).pathname
 
     request = http.get({host: host, path: path}, function(res){
       res.setEncoding('binary')
