@@ -39,7 +39,9 @@ function download(match, output, addText){
 }
 
 server.get("/", function(request, response){
-  response.simpleText(200, "Hello World!");
+  response.simpleHtml(200, 'fuck yeah / by <a href="http://twitter.com/holman">@holman</a>.'+
+    '<p>api: use <b>fuckyeah.herokuapp.com/[your-query]</b> and shit.</p>'
+  );
 })
 
 server.get("/favicon.ico", function(request, response){
@@ -64,6 +66,7 @@ server.get(new RegExp("^/(.*)$"), function(request, response, match) {
       '-fill', 'white',
       '-pointsize', '50',
       '-gravity', 'center',
+      '-weight', '800',
       '-resize', '500x',
       '-draw', 'text 0,100 ' + unescape(msg),
       output
@@ -77,4 +80,4 @@ server.get(new RegExp("^/(.*)$"), function(request, response, match) {
   })
 })
 
-server.listen(process.env.PORT, '0.0.0.0')
+server.listen(process.env.PORT || 8080, '0.0.0.0')
