@@ -7,21 +7,21 @@ server = require('node-router').getServer()
 im     = require('imagemagick')
 
 function fetch(query,cb){
-  google = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=' + query
+  var google = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=' + query
   req({uri:google}, function (e, resp, body) {
-    result = JSON.parse(body)['responseData']['results'][0]['unescapedUrl']
+    var result = JSON.parse(body)['responseData']['results'][0]['unescapedUrl']
     cb(result)
   })
 }
 
 function download(match, output, addText){
   fetch(match, function(file){
-    host = url.parse(file).hostname
-    path = url.parse(file).pathname
+    var host = url.parse(file).hostname
+      , path = url.parse(file).pathname
 
     request = http.get({host: host, path: path}, function(res){
       res.setEncoding('binary')
-      img = ''
+      var img = ''
 
       res.on('data', function(chunk) {
         img += chunk
@@ -48,17 +48,18 @@ server.get("/favicon.ico", function(request, response){
 })
 
 server.get(new RegExp("^/(.*)$"), function(request, response, match) {
-  match = escape(match)
-  chars = match.length
+  var msg   = ""
+    , match = escape(match)
+    , chars = match.length
 
   if(chars < 7)
     msg = '"FUCK YEAH ' + match.toUpperCase() + '"'
   else
     msg = '"FUCK YEAH \n' + match.toUpperCase() + '"'
 
-  output = "/tmp/fuck-" + Math.floor(Math.random(10000000)*10000000) + '.jpg'
+  var output = "/tmp/fuck-" + Math.floor(Math.random(10000000)*10000000) + '.jpg'
   download(match, output, function(){
-    args = [
+    var args = [
       output,
       '-strokewidth', '2',
       '-stroke', 'black',
@@ -70,11 +71,13 @@ server.get(new RegExp("^/(.*)$"), function(request, response, match) {
       '-draw', 'text 0,100 ' + unescape(msg),
       output
     ]
-  
+
     im.convert(args, function(){
-      img = fs.readFileSync(output)
-      response.writeHead(200, {'Content-Type': 'image/jpeg' })
-      response.end(img)
+      fs.readFile(output, function (err, data) {
+        if (err) throw err;
+        response.writeHead(200, {'Content-Type': 'image/jpeg' })
+        response.end(data)
+      });
     })
   })
 })
