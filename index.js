@@ -77,4 +77,4 @@ server.get(new RegExp("^/(.*)$"), function(request, response, match) {
   })
 })
 
-server.listen(process.env.PORT, "localhost")
+server.listen(process.env.PORT, '0.0.0.0')
