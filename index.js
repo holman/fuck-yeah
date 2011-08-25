@@ -49,8 +49,8 @@ server.get("/favicon.ico", function(request, response){
 })
 
 server.get(new RegExp("^/(.*)$"), function(request, response, match) {
-  match = escape(match)
-  chars = match.length
+  var match = escape(match)
+    , chars = match.length
 
   if(chars < 7)
     msg = '"FUCK YEAH ' + match.toUpperCase() + '"'
@@ -59,7 +59,7 @@ server.get(new RegExp("^/(.*)$"), function(request, response, match) {
 
   output = "/tmp/fuck-" + Math.floor(Math.random(10000000)*10000000) + '.jpg'
   download(match, output, function(){
-    args = [
+    var args = [
       output,
       '-strokewidth', '2',
       '-stroke', 'black',
@@ -71,11 +71,13 @@ server.get(new RegExp("^/(.*)$"), function(request, response, match) {
       '-draw', 'text 0,100 ' + unescape(msg),
       output
     ]
-  
+
     im.convert(args, function(){
-      img = fs.readFileSync(output)
-      response.writeHead(200, {'Content-Type': 'image/jpeg' })
-      response.end(img)
+      fs.readFile(output, function (err, data) {
+        if (err) throw err;
+        response.writeHead(200, {'Content-Type': 'image/jpeg' })
+        response.end(data)
+      });
     })
   })
 })
