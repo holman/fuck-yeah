@@ -8,7 +8,7 @@ server = require('node-router').getServer()
 im     = require('imagemagick')
 
 function fetch(query,cb){
-  var google = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=' + query
+  var google = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=' + encodeURI(query)
   req({uri:google}, function (e, resp, body) {
     result = JSON.parse(body)['responseData']['results'][0];
     
