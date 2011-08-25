@@ -1,4 +1,5 @@
 http   = require('http')
+https   = require('https')
 fs     = require('fs')
 url    = require('url')
 
@@ -7,19 +8,29 @@ server = require('node-router').getServer()
 im     = require('imagemagick')
 
 function fetch(query,cb){
-  var google = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=' + query
+  var google = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=' + encodeURI(query)
   req({uri:google}, function (e, resp, body) {
-    var result = JSON.parse(body)['responseData']['results'][0]['unescapedUrl']
-    cb(result)
-  })
+    result = JSON.parse(body)['responseData']['results'][0]
+    
+    if(result)
+      cb(result['unescapedUrl'])
+    else
+      cb("https://img.skitch.com/20110825-ewsegnrsen2ry6nakd7cw2ed1m.png")
+  });
 }
 
 function download(match, output, addText){
   fetch(match, function(file){
-    var host = url.parse(file).hostname
-      , path = url.parse(file).pathname
-
-    request = http.get({host: host, path: path}, function(res){
+    var uri = url.parse(file)
+    var host = uri.hostname
+      , path = uri.pathname
+    
+    if(uri.protocol == "https:")
+      var r = https
+    else 
+      var r = http
+      
+    request = r.get({host: host, path: path}, function(res){
       res.setEncoding('binary')
       var img = ''
 
