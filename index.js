@@ -21,9 +21,6 @@ function fetch(query,cb){
 
 function download(match, output, addText){
   fetch(match, function(file){
-    if(!match) {
-      
-    }
     var uri = url.parse(file)
     var host = uri.hostname
       , path = uri.pathname
