@@ -57,7 +57,7 @@ server.get(new RegExp("^/(.*)$"), function(request, response, match) {
   else
     msg = '"FUCK YEAH \n' + match.toUpperCase() + '"'
 
-  output = "fuck-" + Math.floor(Math.random(10000000)*10000000) + '.jpg'
+  output = "/tmp/fuck-" + Math.floor(Math.random(10000000)*10000000) + '.jpg'
   download(match, output, function(){
     args = [
       output,
