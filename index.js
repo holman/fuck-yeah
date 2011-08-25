@@ -10,12 +10,12 @@ im     = require('imagemagick')
 function fetch(query,cb){
   var google = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=' + encodeURI(query)
   req({uri:google}, function (e, resp, body) {
-    result = JSON.parse(body)['responseData']['results'][0];
+    result = JSON.parse(body)['responseData']['results'][0]
     
     if(result)
-      cb(result['unescapedUrl']);
+      cb(result['unescapedUrl'])
     else
-      cb("https://img.skitch.com/20110825-ewsegnrsen2ry6nakd7cw2ed1m.png");
+      cb("https://img.skitch.com/20110825-ewsegnrsen2ry6nakd7cw2ed1m.png")
   });
 }
 
@@ -26,9 +26,9 @@ function download(match, output, addText){
       , path = uri.pathname
     
     if(uri.protocol == "https:")
-      var r = https;
+      var r = https
     else 
-      var r = http;
+      var r = http
       
     request = r.get({host: host, path: path}, function(res){
       res.setEncoding('binary')
