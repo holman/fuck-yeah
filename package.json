@@ -2,5 +2,8 @@
   "name": "fuck-yeah",
   "version": "0.0.1",
   "dependencies": {
+    "imagemagick": "0.1.2",
+    "request": "2.1.1",
+    "node-router": "https://github.com/creationix/node-router/tarball/master"
   }
 }
