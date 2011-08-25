@@ -77,4 +77,4 @@ server.get(new RegExp("^/(.*)$"), function(request, response, match) {
   })
 })
 
-server.listen(8080, "localhost")
+server.listen(80, "localhost")
