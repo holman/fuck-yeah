@@ -11,7 +11,7 @@ function fetch(query,cb){
   var google = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=' + encodeURI(query)
   req({uri:google}, function (e, resp, body) {
     result = JSON.parse(body)['responseData']['results'][0]
-    
+
     if(result)
       cb(result['unescapedUrl'])
     else
@@ -24,12 +24,12 @@ function download(match, output, addText){
     var uri = url.parse(file)
     var host = uri.hostname
       , path = uri.pathname
-    
+
     if(uri.protocol == "https:")
       var r = https
-    else 
+    else
       var r = http
-      
+
     request = r.get({host: host, path: path}, function(res){
       res.setEncoding('binary')
       var img = ''
