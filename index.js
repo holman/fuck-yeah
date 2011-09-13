@@ -61,7 +61,7 @@ server.get("/favicon.ico", function(request, response){
 server.get("/fuck-yeah", function(request, response) {
   var urlObj = url.parse(request.url, true);
   var msg   = ""
-    , match = escape(urlObj.query.q)
+    , match = urlObj.query.q
     , chars = match.length
 
   if(chars < 7)
