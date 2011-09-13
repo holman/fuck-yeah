@@ -50,7 +50,7 @@ function download(match, output, addText){
 
 server.get("/", function(request, response){
   response.simpleHtml(200, 'fuck yeah / by <a href="http://twitter.com/holman">@holman</a>.'+
-    '<p>api: use <b>fuckyeah.herokuapp.com/[your-query]</b> and shit.</p>'
+    '<p>api: use <b>fuckyeah.herokuapp.com/fuck-yeah?q=[your-query]</b> and shit.</p>'
   );
 })
 
@@ -58,9 +58,10 @@ server.get("/favicon.ico", function(request, response){
   return ""
 })
 
-server.get(new RegExp("^/(.*)$"), function(request, response, match) {
+server.get("/fuck-yeah", function(request, response) {
+  var urlObj = url.parse(request.url, true);
   var msg   = ""
-    , match = escape(match)
+    , match = urlObj.query.q
     , chars = match.length
 
   if(chars < 7)
