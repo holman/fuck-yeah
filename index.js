@@ -1,5 +1,5 @@
 http   = require('http')
-https   = require('https')
+https  = require('https')
 fs     = require('fs')
 url    = require('url')
 
@@ -21,8 +21,8 @@ function fetch(query,cb){
 
 function download(match, output, addText){
   fetch(match, function(file){
-    var uri = url.parse(file)
-    var host = uri.hostname
+    var uri  = url.parse(file)
+      , host = uri.hostname
       , path = uri.pathname
 
     if(uri.protocol == "https:")
