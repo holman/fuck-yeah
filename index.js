@@ -58,15 +58,16 @@ server.get("/favicon.ico", function(request, response){
   return ""
 })
 
-server.get(new RegExp("^/(.*)(?:.jpg)?$"), function(request, response, match) {
-  var msg   = ""
-    , match = escape(match)
-    , chars = match.length
+server.get(new RegExp("^/(.*)$"), function(request, response, match) {
+  var msg    = ""
+    , match = escape(match).replace(/\.jpg$/, '')
+    , chars  = match.length;
 
-  if(chars < 7)
-    msg = '"FUCK YEAH ' + match.toUpperCase() + '"'
-  else
-    msg = '"FUCK YEAH \n' + match.toUpperCase() + '"'
+  if(chars < 7) {
+    msg = '"FUCK YEAH ' + match.toUpperCase() + '"';
+  } else {
+    msg = '"FUCK YEAH \n' + match.toUpperCase() + '"';
+  }
 
   var output = "/tmp/fuck-" + Math.floor(Math.random(10000000)*10000000) + '.jpg'
   download(match, output, function(){
@@ -91,6 +92,6 @@ server.get(new RegExp("^/(.*)(?:.jpg)?$"), function(request, response, match) {
       });
     })
   })
-})
+});
 
 server.listen(process.env.PORT || 8080, '0.0.0.0')
