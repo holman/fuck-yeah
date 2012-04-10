@@ -71,6 +71,8 @@ server.get(new RegExp("^/(.*)(?:.jpg)?$"), function(request, response, match) {
   var output = "/tmp/fuck-" + Math.floor(Math.random(10000000)*10000000) + '.jpg'
   download(match, output, function(){
     im.identify(output,function(err,features){
+      if (err)
+        return;
       var h = features.height < 100 ? features.height : 100
         , w = features.width < 500 ? features.width : 500
         , args = [
