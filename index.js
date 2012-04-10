@@ -71,16 +71,17 @@ server.get(new RegExp("^/(.*)(?:.jpg)?$"), function(request, response, match) {
   var output = "/tmp/fuck-" + Math.floor(Math.random(10000000)*10000000) + '.jpg'
   download(match, output, function(){
     var args = [
+      '-strokewidth','2',
+      '-stroke','black',
+      '-background','transparent',
+      '-fill','white',
+      '-gravity','center',
+      '-size','500x100',
+      "caption:"+unescape(msg),
       output,
-      '-strokewidth', '2',
-      '-stroke', 'black',
-      '-fill', 'white',
-      '-pointsize', '50',
-      '-gravity', 'center',
-      '-weight', '800',
-      '-resize', '500x',
-      '-draw', 'text 0,100 ' + unescape(msg),
-      output
+      '+swap',
+      '-gravity','south',
+      '-composite',output
     ]
 
     im.convert(args, function(){
