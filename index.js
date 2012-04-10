@@ -64,32 +64,37 @@ server.get(new RegExp("^/(.*)(?:.jpg)?$"), function(request, response, match) {
     , chars = match.length
 
   if(chars < 7)
-    msg = '"FUCK YEAH ' + match.toUpperCase() + '"'
+    msg = 'FUCK YEAH ' + match.toUpperCase() + ''
   else
-    msg = '"FUCK YEAH \n' + match.toUpperCase() + '"'
+    msg = 'FUCK YEAH \n' + match.toUpperCase() + ''
 
   var output = "/tmp/fuck-" + Math.floor(Math.random(10000000)*10000000) + '.jpg'
   download(match, output, function(){
-    var args = [
-      output,
-      '-strokewidth', '2',
-      '-stroke', 'black',
-      '-fill', 'white',
-      '-pointsize', '50',
-      '-gravity', 'center',
-      '-weight', '800',
-      '-resize', '500x',
-      '-draw', 'text 0,100 ' + unescape(msg),
-      output
-    ]
-
-    im.convert(args, function(){
-      fs.readFile(output, function (err, data) {
-        if (err) throw err;
-        response.writeHead(200, {'Content-Type': 'image/jpeg' })
-        response.end(data)
+    im.identify(output,function(err,features){
+      var h = features.height < 100 ? features.height : 100
+        , w = features.width < 500 ? features.width : 500
+        , args = [
+            '-strokewidth','2',
+            '-stroke','black',
+            '-background','transparent',
+            '-fill','white',
+            '-gravity','center',
+            '-size',w+'x'+h,
+            "caption:"+unescape(msg),
+            output,
+            '+swap',
+            '-gravity','south',
+            '-size',w+'x',
+            '-composite',output
+          ];
+      im.convert(args, function(){
+        fs.readFile(output, function (err, data) {
+          if (err) throw err;
+          response.writeHead(200, {'Content-Type': 'image/jpeg' })
+          response.end(data)
+        });
       });
-    })
+    });
   })
 })
 
