@@ -64,9 +64,9 @@ server.get(new RegExp("^/(.*)(?:.jpg)?$"), function(request, response, match) {
     , chars = match.length
 
   if(chars < 7)
-    msg = '"FUCK YEAH ' + match.toUpperCase() + '"'
+    msg = 'FUCK YEAH ' + match.toUpperCase() + ''
   else
-    msg = '"FUCK YEAH \n' + match.toUpperCase() + '"'
+    msg = 'FUCK YEAH \n' + match.toUpperCase() + ''
 
   var output = "/tmp/fuck-" + Math.floor(Math.random(10000000)*10000000) + '.jpg'
   download(match, output, function(){
