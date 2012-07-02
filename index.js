@@ -60,13 +60,13 @@ server.get("/favicon.ico", function(request, response){
 
 server.get(new RegExp("^/(.*)(?:.jpg)?$"), function(request, response, match) {
   var msg   = ""
-    , match = escape(match)
+    , match = escape(match.toUpperCase())
     , chars = match.length
 
   if(chars < 7)
-    msg = 'FUCK YEAH ' + match.toUpperCase() + ''
+    msg = 'FUCK YEAH ' + match + ''
   else
-    msg = 'FUCK YEAH \n' + match.toUpperCase() + ''
+    msg = 'FUCK YEAH \n' + match + ''
 
   var output = "/tmp/fuck-" + Math.floor(Math.random(10000000)*10000000) + '.jpg'
   download(match, output, function(){
