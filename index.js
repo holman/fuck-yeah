@@ -58,7 +58,7 @@ server.get("/favicon.ico", function(request, response){
   return ""
 })
 
-server.get(new RegExp("^/(.*)(?:.jpg)?$"), function(request, response, match) {
+server.get(new RegExp("^/(.*?)(?:.jpg)?$"), function(request, response, match) {
   var msg   = ""
     , match = escape(match.toUpperCase())
     , chars = match.length
